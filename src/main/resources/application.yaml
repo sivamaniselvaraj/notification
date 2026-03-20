@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: Notification
+  datasource:
+    url: jdbc:mysql://db_notification:3306/NotificationDB?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  kafka:
+    bootstrap-servers: kafka:29092
+    order_topic: order_topic
+    processing_topic: processing_topic
+    notification_topic: notification_topic
+    consumer:
+      group-id: notification_group
+      auto-offset-reset: earliest
+      retry_backoff_ms: 3000
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+websocket:
+  broker: /topic
+  application_destination_prefixes: /app
+  end_point: /ws

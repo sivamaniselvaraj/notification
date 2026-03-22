@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @Slf4j
 public class NotificationService {
@@ -19,6 +21,8 @@ public class NotificationService {
 
     public void process(OrderEvent event) {
         Notification notification = new Notification();
+        notification.setNotificationId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+        notification.setUserId(event.getOrderId());
         notification.setOrderId(event.getOrderId());
         notification.setMessage("Order Created");
 

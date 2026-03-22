@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -25,6 +26,7 @@ public class NotificationService {
         notification.setUserId(event.getOrderId());
         notification.setOrderId(event.getOrderId());
         notification.setMessage("Order Created");
+        notification.setCreatedAt(LocalDateTime.now());
 
         notificationrepository.save(notification);
 

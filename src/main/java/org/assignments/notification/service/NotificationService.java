@@ -19,7 +19,7 @@ public class NotificationService {
 
     public void process(OrderEvent event) {
         Notification notification = new Notification();
-        notification.setOrderId(Long.parseLong(event.getOrderId()));
+        notification.setOrderId(event.getOrderId());
         notification.setMessage("Order Created");
 
         notificationrepository.save(notification);

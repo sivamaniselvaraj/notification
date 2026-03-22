@@ -2,6 +2,7 @@ package org.assignments.notification.config.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.assignments.notification.dto.OrderEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,27 +33,29 @@ public class KafkaConsumerConfig {
      Consumer Configuration
      */
     @Bean
-    public ConsumerFactory<String, String> consumerFactory() {
+    public ConsumerFactory<String, OrderEvent> consumerFactory() {
 
         Map<String, Object> config = new HashMap<>();
 
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BOOTSTRAP_SERVER);
         config.put(ConsumerConfig.GROUP_ID_CONFIG, KAFKA_PROCESSING_CONSUMER_GROUP);
 
-        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JacksonJsonDeserializer.class);
+//        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+//        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JacksonJsonDeserializer.class);
 
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, KAFKA_GROUP_AUTO_OFFSET_RESET);
         config.put(ConsumerConfig.RETRY_BACKOFF_MS_CONFIG, KAFKA_RETRY_BACKOFF_MILLI_SEC);
 
-        return new DefaultKafkaConsumerFactory<>(config);
+        JacksonJsonDeserializer<OrderEvent> payloadJsonDeserializer = new JacksonJsonDeserializer<>();
+        payloadJsonDeserializer.addTrustedPackages("org.assignments.notification.dto");
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), payloadJsonDeserializer);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String>
+    public ConcurrentKafkaListenerContainerFactory<String, OrderEvent>
     kafkaListenerContainerFactory() {
 
-        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+        ConcurrentKafkaListenerContainerFactory<String, OrderEvent> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
 
         factory.setConsumerFactory(consumerFactory());

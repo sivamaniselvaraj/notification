@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class OrderEvent {
-    private String orderId;
-    private String status;
+    private String eventType;
+    private Long orderId;
     private String correlationId;
+    private String status;
 }

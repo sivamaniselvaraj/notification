@@ -1,8 +1,11 @@
+server:
+  port: 8083
+
 spring:
   application:
     name: Notification
   datasource:
-    url: jdbc:mysql://db_notification:3306/NotificationDB?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://notification-mysql:3306/notification_db?allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -29,3 +32,6 @@ websocket:
   broker: /topic
   application_destination_prefixes: /app
   end_point: /ws
+logging:
+  level:
+    root: DEBUG

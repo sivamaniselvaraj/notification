@@ -41,5 +41,5 @@ public class Notification {
 
     // 🔗 One Notification → Many DeliveryStatus
     @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<DeliveryStatusType> deliveryStatuses;
+    private List<DeliveryStatus> deliveryStatuses;
 }

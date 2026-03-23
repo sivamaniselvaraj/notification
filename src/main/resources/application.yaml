@@ -22,7 +22,7 @@ spring:
     processing_topic: processing_topic
     notification_topic: notification_topic
     consumer:
-      group-id: notification_group
+      group-id: notification-group
       auto-offset-reset: earliest
       retry_backoff_ms: 3000
     producer:

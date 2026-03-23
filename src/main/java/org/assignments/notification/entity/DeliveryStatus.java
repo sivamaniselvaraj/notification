@@ -1,5 +1,6 @@
 package org.assignments.notification.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,10 +16,12 @@ import java.time.LocalDateTime;
 public class DeliveryStatus {
 
     @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "delivery_id")
     private Long deliveryId;
 
     // 🔗 Many DeliveryStatus → One Notification
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "notification_id", nullable = false)
     private Notification notification;

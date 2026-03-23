@@ -18,13 +18,13 @@ public class OrderEventConsumer {
     @Autowired
     private NotificationService notificationService;
 
-    @Value("${spring.kafka.order_topic}")
-    static final String KAFKA_ORDER_TOPIC = "order_topic";
+    @Value("${spring.kafka.notification_topic}")
+    static final String KAFKA_NOTIFICATION_TOPIC = "notification_topic";
 
     @Value("${spring.kafka.consumer.group-id}")
-    static final String KAFKA_PROCESSING_GROUP = "processing-group";
+    static final String KAFKA_NOTIFICATION_GROUP = "notification-group";
 
-    @KafkaListener(topics = KAFKA_ORDER_TOPIC, groupId = KAFKA_PROCESSING_GROUP, containerFactory= "kafkaListenerContainerFactory")
+    @KafkaListener(topics = KAFKA_NOTIFICATION_TOPIC, groupId = KAFKA_NOTIFICATION_GROUP, containerFactory= "kafkaListenerContainerFactory")
 
         public void consume(String eventMessage) {
             try{
@@ -32,13 +32,15 @@ public class OrderEventConsumer {
                 OrderEvent event = MAPPER.readValue(eventMessage, OrderEvent.class);
                 log.info("Received order event {} {}", event.getStatus(), event.getOrderId());
 
-
-                if ("orderCreated".equalsIgnoreCase(event.getStatus())) {
-                    //OrderEvent orderEvent = MAPPER.readValue(event.getPayload(), OrderEvent.class);
-                    notificationService.process(event);
-                }}
+//
+//                if ("orderCreated".equalsIgnoreCase(event.getStatus())) {
+//                    //OrderEvent orderEvent = MAPPER.readValue(event.getPayload(), OrderEvent.class);
+//                    notificationService.process(event);
+//                }
+                notificationService.process(event);
+            }
             catch (Exception e){
-                e.printStackTrace();
+                log.info(e.getMessage());
             }
 
         }

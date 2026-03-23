@@ -1,5 +1,6 @@
 package org.assignments.notification.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.assignments.notification.enums.DeliveryStatusType;
@@ -17,6 +18,7 @@ import java.util.List;
 public class Notification {
 
     @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
     private Long notificationId;
 
@@ -40,6 +42,7 @@ public class Notification {
     private LocalDateTime createdAt;
 
     // 🔗 One Notification → Many DeliveryStatus
+    @JsonManagedReference
     @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DeliveryStatus> deliveryStatuses;
 }

@@ -2,8 +2,10 @@ package org.assignments.notification;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 
 @SpringBootApplication
+@EnableWebSocketMessageBroker
 public class NotificationApplication {
 
     public static void main(String[] args) {

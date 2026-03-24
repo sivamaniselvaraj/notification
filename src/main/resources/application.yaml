@@ -34,4 +34,4 @@ websocket:
   end_point: /ws
 logging:
   level:
-    root: DEBUG
+    root: INFO

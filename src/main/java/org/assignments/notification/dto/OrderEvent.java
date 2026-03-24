@@ -14,4 +14,5 @@ public class OrderEvent {
     private Long orderId;
     private String correlationId;
     private String status;
+    private String idempotencyKey;
 }

@@ -1,5 +1,6 @@
 package org.assignments.notification.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.assignments.notification.dto.DeliveryStatusRequest;
 import org.assignments.notification.dto.DeliveryStatusResponse;
 import org.assignments.notification.service.DeliveryStatusService;
@@ -11,6 +12,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/notifications")
+@CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class NotificationController {
 
     @Autowired
@@ -28,7 +31,7 @@ public class NotificationController {
     @GetMapping("/status/{orderId}")
     public ResponseEntity<List<DeliveryStatusResponse>> getStatusByOrderId(
             @PathVariable Long orderId) {
-
+        log.info("getStatusByOrderId {}", orderId);
         List<DeliveryStatusResponse> response = deliveryStatusService.getByOrderId(orderId);
 
         return ResponseEntity.ok(response);

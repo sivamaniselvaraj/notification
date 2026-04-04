@@ -12,8 +12,8 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Processing Service API")
+                        .title("Notification Service API")
                         .version("1.0")
-                        .description("API documentation for Processing Microservice"));
+                        .description("API documentation for Notification Microservice"));
     }
 }
